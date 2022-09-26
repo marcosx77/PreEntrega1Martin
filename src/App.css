@@ -1,4 +1,8 @@
-.App {
+.App-header {
+  background-color: #d8dadd;
+  min-height: 100vh;
+}
+/* .App {
   text-align: center;
 }
 
@@ -36,3 +40,4 @@
     transform: rotate(360deg);
   }
 }
+ */

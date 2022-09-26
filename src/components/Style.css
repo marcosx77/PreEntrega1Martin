@@ -22,3 +22,13 @@ ul {
   li a:hover {
     background-color: #111;
   }
+
+  .LstItem{
+    text-align:center;
+    color: black;
+    margin-top: 30px;
+  }
+
+  .Nombre{
+    font-weight: bold;
+  }
