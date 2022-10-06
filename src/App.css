@@ -2,6 +2,52 @@
   background-color: #d8dadd;
   min-height: 100vh;
 }
+
+.ItemListContainer {
+  min-height: 100vh;
+  display: block;
+  flex-direction: column;
+  column-count: 3;
+  align-items: center;
+  justify-content:center;
+  padding: 20px;
+}
+
+.ItemList {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ItemDetalle{
+  border:solid;
+  border-color: lightgray;
+  border-style: inset;
+  border-radius: 5px;
+  margin: 20px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  flex-direction: rows;
+  margin-bottom: 20px;
+}
+.ItemDetalle img {
+  max-width: 350px;
+  max-height: 350px;
+  padding: 10px; 
+}
+
+.itemCount {
+  border:solid;
+  border-color: lightgray;
+  border-style: inset;
+  border-radius: 5px;
+  margin: 20px;
+  display: flex;
+}
 /* .App {
   text-align: center;
 }
