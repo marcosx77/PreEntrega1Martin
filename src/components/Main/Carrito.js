@@ -1,6 +1,6 @@
 const Carrito=()=>{
     return (
-        <div>
+        <div className="carrito">
             <h3>Aca va el carrito de Compras...!!!</h3>
         </div>
     );

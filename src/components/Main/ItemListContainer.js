@@ -18,7 +18,7 @@ const ItemListContainer=()=>{
 
                 setTimeout(() => {
                     res(nomCategoria ? filtroProd : productos);
-               }, 1000);     
+               }, 500);     
             });
         };
         ObtenerProducto()
@@ -32,7 +32,7 @@ const ItemListContainer=()=>{
 
     return(
         <main>
-            <div className="ItemListContainer">
+            <div className="itemlistcontainer">
                 <ItemList items={items}/>
             </div>
         </main>

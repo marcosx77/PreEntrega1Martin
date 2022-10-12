@@ -9,8 +9,7 @@ import { BrowserRouter, Routes, Route} from 'react-router-dom';
 
 function App() {
   return (
-   <div className='App-header'>
-      <>
+   <div>
         <BrowserRouter>
           <NavBar/>
             <Routes>
@@ -18,15 +17,13 @@ function App() {
               <ItemDetailContainer/> */}
               <Route path='/' element={<ItemListContainer/>}/>
               <Route path='/categoria/:nomCategoria' element={<ItemListContainer/>}/>
-              <Route path='/item' element={<ItemDetailContainer/>}/>
-              <Route path='/Carrito' element={<Carrito/>}/>
+              <Route path='/item/:id' element={<ItemDetailContainer/>}/>
+              <Route path='/carrito' element={<Carrito/>}/>
               {/* <Route path='*' element={<PageNotFound/>}/> */}
             </Routes>
             <Footer/>
         </BrowserRouter>
-      </>
     </div>  
   );
 }
-
 export default App;

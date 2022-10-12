@@ -1,6 +1,6 @@
 const Footer =()=>{
     return(
-        <div>
+        <div className="footer">
             <h2>Footer de mi Aplicación</h2>
         </div>
     );
