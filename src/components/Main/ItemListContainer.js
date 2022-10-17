@@ -1,6 +1,6 @@
 import React from "react";
 import ItemList from './ItemList';
-import { productos } from '../Mock/ProductosMock';
+import { productos } from '../../Mock/ProductosMock';
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";

@@ -3,7 +3,8 @@ import React, { useState } from "react";
 
 const ItemCount = (props) =>{
     const [contador, setContador] = useState(1);
-    
+    const {agregar}=props;
+
     const suma=() =>{
         contador < props.stock && setContador(contador + 1);
     };
@@ -14,6 +15,10 @@ const ItemCount = (props) =>{
         console.log(contador)
     };
 
+    const agrega=() =>{
+        agregar(contador);
+    };
+
     return(
         <>
         <div className="itemcount">
@@ -22,7 +27,7 @@ const ItemCount = (props) =>{
              <button  className="btn btn-secondary" onClick={resta}>-</button>
         </div>
         <div>
-            <button  className="btn btn-secondary btncarrito">Agregar al Carrito</button>
+            <button  onClick={agrega} className="btn btn-secondary btncarrito">Agregar al Carrito</button>
         </div>
         </>
         
