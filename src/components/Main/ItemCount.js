@@ -8,17 +8,16 @@ const ItemCount = (props) =>{
     const suma=() =>{
         contador < props.stock && setContador(contador + 1);
     };
-    console.log(contador)
 
     const resta =()=> {
         contador > 1 && setContador(contador - 1);
-        console.log(contador)
     };
 
     const agrega=() =>{
         agregar(contador);
     };
 
+    
     return(
         <>
         <div className="itemcount">

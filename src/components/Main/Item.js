@@ -12,7 +12,7 @@ const Item=({prod})=>{
                 {/* <Card.Text>{prod.descripcion}</Card.Text> */}
                 <Card.Text>$ {prod.precio}</Card.Text>
                 <Button variant="primary">{prod.categoria}</Button>
-                <Link className='linkdeta' to={`/item/${prod.id}`}>Ver Detalle</Link>
+                <Link  className='linkdeta' to={`/item/${prod.id}`}><Button variant="secondary">Ver Detalle</Button></Link>
                 
             </Card.Body>
          </Card>

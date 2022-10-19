@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const ContextCarrito = createContext();
 
@@ -32,10 +33,23 @@ const Provider = ({children}) => {
         setCarrito (atualizaCarrito);
     };
 
+    const SubTotal =(precio,cantidad)=>{
+        const subtot=precio*cantidad;
+        return(subtot);
+    };
     const sumaTotal =() =>{
         const tot= carrito.reduce((a,p)=> a+(p.precio*p.cantidad),0);
         return(tot);
     };
+
+    const sumaCantidad=()=>{
+        let cant=0;
+        const cartCopia=[...carrito];
+        cartCopia.forEach((p)=>{
+            cant +=p.cantidad;
+        });
+        return(cant);
+    }
 
     const estaEnCarrito =(id) => carrito.some((prod) => prod.id===id);
 
@@ -44,13 +58,22 @@ const Provider = ({children}) => {
         setCarrito(filtro);
     }
 
-    const eliminoCarrito =()=> setCarrito([]);
-
+    const eliminoCarrito =()=> {
+        setCarrito([]);
+        showToastMessage();
+    }
+    const showToastMessage = () => {
+        toast.info('Se Elimino el Carrito', {
+            position: toast.POSITION.TOP_RIGHT
+        });
+    };
 
     return (
-        <ContextCarrito.Provider value={{ carrito, agregarCarrito, eliminoUno, eliminoCarrito, sumaTotal}}>
+        <ContextCarrito.Provider value={{ carrito, agregarCarrito, eliminoUno, eliminoCarrito, sumaTotal, SubTotal, sumaCantidad}}>
                 {children}
+                <ToastContainer/>
         </ContextCarrito.Provider>
+        
     )
 };
 export default Provider;
