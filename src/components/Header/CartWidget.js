@@ -11,12 +11,9 @@ function CartWidget(){
     return(
         <div>
             <FontAwesomeIcon icon={faShoppingCart} color={"#FFFFFF"} size={"xl"}/>
-            
-            <span className='cartwid'>
+            <span className='cartwid'  style={{ visibility: cantidad === 0 ? 'hidden' : 'visible'}}>
                 {cantidad}
             </span>
-            
-            
         </div>
     );
 }

@@ -1,8 +1,9 @@
 import React , { useState , useEffect } from "react";
-import { productos } from '../../Mock/ProductosMock';
 import ItemDetalle from './ItemDetalle';
 import { useParams } from 'react-router-dom';
 import MoonLoader from 'react-spinners/MoonLoader';
+import { collection, doc, getDoc } from "firebase/firestore";
+import {baseDatos} from '../../Services/firebaseConfig'
 
 const ItemDetailContainer= ()=>{
     const [itemDet, setItemDet]=useState({});
@@ -10,18 +11,15 @@ const ItemDetailContainer= ()=>{
     const { id } = useParams();
 
     useEffect(()=>{
-        const DetalleProducto=() =>{
-            return new Promise((res, rej)=>{
-                const prod= productos.find((p)=>p.id===Number(id));
+        const colectionProductos=collection(baseDatos,'productos');
+        const prodId =doc(colectionProductos, id);
+        getDoc(prodId)
 
-                setTimeout(() => {
-                    res(prod);
-                }, 1500);
-            })
-        };
-        DetalleProducto()
         .then((res)=>{
-            setItemDet(res);        
+            setItemDet ({
+               id:  res.id,
+               ...res.data(),
+            });        
         })
         .catch(()=>{
             console.log('Error')
@@ -53,3 +51,26 @@ const ItemDetailContainer= ()=>{
 }
 
 export default ItemDetailContainer;
+
+
+/* const DetalleProducto=() =>{
+    return new Promise((res, rej)=>{
+        const prod= productos.find((p)=>p.id===Number(id));
+
+        setTimeout(() => {
+            res(prod);
+        }, 1500);
+    })
+};
+DetalleProducto()
+.then((res)=>{
+    setItemDet(res);        
+})
+.catch(()=>{
+    console.log('Error')
+})
+.finally(() => {
+    setLoading(false);
+});
+
+return () => setLoading(true); */

@@ -1,7 +1,6 @@
 import { createContext, useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Swal from 'sweetalert2/dist/sweetalert2.all.js'
 export const ContextCarrito = createContext();
 
 
@@ -23,7 +22,7 @@ const Provider = ({children}) => {
         const atualizaCarrito = carrito.map((prodCarrito) => {
             if (prodCarrito.id===prodAdd.id) {
                 const pordActualiza ={
-                    ...prodCarrito, cantidad: prodCarrito.cantidad+prodAdd.cantidad,
+                    ...prodCarrito, cantidad: prodAdd.cantidad,
                 };
                 return pordActualiza;
             } else {
@@ -50,7 +49,10 @@ const Provider = ({children}) => {
         });
         return(cant);
     }
-
+    const cantPordCarrito=(id)=>{
+        const prod=carrito.find((p)=>p.id===id)
+        return prod?.cantidad
+    }
     const estaEnCarrito =(id) => carrito.some((prod) => prod.id===id);
 
     const eliminoUno = (id) =>{
@@ -59,19 +61,30 @@ const Provider = ({children}) => {
     }
 
     const eliminoCarrito =()=> {
-        setCarrito([]);
-        showToastMessage();
+       /*  setCarrito([]); */
+        /* showToastMessage(); */
+        Alerta();
     }
-    const showToastMessage = () => {
-        toast.info('Se Elimino el Carrito', {
-            position: toast.POSITION.TOP_RIGHT
+    
+    const Alerta=()=>{
+        Swal.fire({
+            title: "SportNew",
+            text: "¿Seguro que elimina el carrito?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar",
+        })
+        .then(resultado => {
+            if (resultado.value) {
+                setCarrito([]); 
+            } 
         });
-    };
 
+    }
     return (
-        <ContextCarrito.Provider value={{ carrito, agregarCarrito, eliminoUno, eliminoCarrito, sumaTotal, SubTotal, sumaCantidad}}>
+        <ContextCarrito.Provider value={{ carrito, agregarCarrito, eliminoUno, eliminoCarrito, sumaTotal, SubTotal, sumaCantidad, cantPordCarrito}}>
                 {children}
-                <ToastContainer/>
         </ContextCarrito.Provider>
         
     )

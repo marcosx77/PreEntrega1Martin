@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
 
-const ItemCount = (props) =>{
-    const [contador, setContador] = useState(1);
-    const {agregar}=props;
+const ItemCount = ({agregar, stock, inicial=1}) =>{
+    const [contador, setContador] = useState(inicial);
+    /* const {agregar}=props; */
 
     const suma=() =>{
-        contador < props.stock && setContador(contador + 1);
+        contador < stock && setContador(contador + 1);
     };
 
     const resta =()=> {

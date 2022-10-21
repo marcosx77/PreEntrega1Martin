@@ -1,10 +1,11 @@
 import React from "react";
 import ItemList from './ItemList';
-import { productos } from '../../Mock/ProductosMock';
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import MoonLoader from 'react-spinners/MoonLoader';
+import { collection, getDocs, query, where } from "firebase/firestore";
+import {baseDatos} from '../../Services/firebaseConfig'
 
 const ItemListContainer=()=>{
     
@@ -13,18 +14,17 @@ const ItemListContainer=()=>{
     const { nomCategoria }=useParams();
 
     useEffect(()=>{
-        const ObtenerProducto= () =>{
-            return new Promise ((res, rej) =>{
-               const filtroProd = productos.filter((p)=> p.categoria=== nomCategoria);
+        const colectionProductos=collection(baseDatos,'productos');
+        getDocs(nomCategoria===undefined?colectionProductos:query (colectionProductos, where ('categoria','==',nomCategoria)))
 
-                setTimeout(() => {
-                    res(nomCategoria ? filtroProd : productos);
-               }, 1500);     
-            });
-        };
-        ObtenerProducto()
         .then((res)=>{
-            setItem(res);
+            const productos = res.docs.map((prod)=>{
+                return {
+                    id:prod.id,
+                    ...prod.data(),
+                };
+            })
+            setItem(productos);
         })
         .catch(()=>{
             console.log('Devuelve un Error')
@@ -32,7 +32,6 @@ const ItemListContainer=()=>{
         .finally(() => {
             setLoading(false);
         });
-
         return () => setLoading(true);
     },[nomCategoria]);
 
@@ -57,3 +56,26 @@ const ItemListContainer=()=>{
     );
 }
 export default ItemListContainer;
+
+
+    /* const ObtenerProducto= () =>{
+            return new Promise ((res, rej) =>{
+               const filtroProd = productos.filter((p)=> p.categoria=== nomCategoria);
+
+                setTimeout(() => {
+                    res(nomCategoria ? filtroProd : productos);
+               }, 1500);     
+            });
+        };
+        ObtenerProducto()
+        .then((res)=>{
+            setItem(res);
+        })
+        .catch(()=>{
+            console.log('Devuelve un Error')
+        })
+        .finally(() => {
+            setLoading(false);
+        });
+
+        return () => setLoading(true); */

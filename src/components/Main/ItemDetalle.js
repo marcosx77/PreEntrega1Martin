@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const ItemDetalle = ({item})=>{
-    const {agregarCarrito} =useContext(ContextCarrito);
+    const {agregarCarrito, cantPordCarrito} =useContext(ContextCarrito);
     const [cantidades, setCantidades] =useState(0);
 
 
@@ -16,12 +16,16 @@ const ItemDetalle = ({item})=>{
         showToastMessage(item, nro);
     } 
 
-    const showToastMessage = (item, nro) => {
+    const showToastMessage = (item, nro, delay = 500) => {
         toast.success(`Se agrego ${item.titulo} x ${nro}`, {
-            position: toast.POSITION.TOP_RIGHT
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: delay,
+            hideProgressBar:false,
+            pauseOnHover: true
         });
     };
-
+    
+    const cantidadInicial=cantPordCarrito(item.id);
     return (
         <div className="itemdetalle">
             <ToastContainer/>
@@ -33,7 +37,7 @@ const ItemDetalle = ({item})=>{
                 <p>Stock: {item.stock}</p>
                 {
                     cantidades===0 ? (
-                        <ItemCount agregar={agregar} stock={item.stock}/>
+                        <ItemCount agregar={agregar} stock={item.stock} inicial={cantidadInicial}/>
                     ) : (
                         <Link to='/Carrito'><button className="btn btn-secondary btncarrito">Terminar mi compra</button></Link>
                         
