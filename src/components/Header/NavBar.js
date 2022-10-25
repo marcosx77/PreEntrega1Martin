@@ -1,12 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CartWidget from './CartWidget';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
+import { useState } from "react";
 import { Link, NavLink } from 'react-router-dom';
-
+import { collection, getDocs } from "firebase/firestore";
+import {baseDatos} from '../../Services/firebaseConfig'
 
 function NavBar(){
-  
+
+  const [categorias, setCategorias]=useState([]);
+  useEffect(()=>{
+    const colleccionCategorias=collection(baseDatos,'categorias');
+    getDocs (colleccionCategorias)
+    .then ((res)=>{
+        const categori =res.docs.map((cat)=>{
+          return {
+            id: cat.id,
+            ...cat.data()
+          }
+        })
+        setCategorias(categori);
+    })
+    .catch((error)=>{
+      console.log('Devuelve un Error')
+    })
+  },[])
+
   return (
     <header>
     <Navbar className='menu' collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -15,9 +35,11 @@ function NavBar(){
             <h1 className='titulo'>SportNew</h1>
           </Link>
           <ul>
-              <NavLink className="lista" to="/categoria/indumentaria">Indumentaria</NavLink>
-              <NavLink className="lista" to="/categoria/calzado">Calzado</NavLink>
-              <NavLink className="lista" to="/categoria/accesorios">Accesorios</NavLink>
+            {categorias.map((cat) => (
+                    <NavLink className="lista" key={cat.id} to={`/categoria/${cat.path}`}>
+                        {cat.nombre}
+                    </NavLink>
+                ))} 	
           </ul> 
           <Link to='/carrito'>
             <CartWidget/>

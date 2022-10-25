@@ -1,10 +1,11 @@
 import './components/Header/NavBar'
 import './App.css';
 import NavBar from './components/Header/NavBar';
-import ItemListContainer from './components/Main/ItemListContainer'
-import ItemDetailContainer from './components/Main/ItemDetailContainer'
-import Carrito from './components/Main/Carrito'
-import Footer from './components/Footer/Footer'
+import ItemListContainer from './components/Main/ItemListContainer';
+import ItemDetailContainer from './components/Main/ItemDetailContainer';
+import Carrito from './components/Main/Carrito';
+import Footer from './components/Footer/Footer';
+import Formulario from './components/Formulario/Formulario';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import Provider from './Context/ContextCarrito';
 
@@ -22,6 +23,7 @@ function App() {
               <Route path='/categoria/:nomCategoria' element={<ItemListContainer/>}/>
               <Route path='/item/:id' element={<ItemDetailContainer/>}/>
               <Route path='/carrito' element={<Carrito/>}/>
+              <Route path="/orden" element={<Formulario/>} />
               {/* <Route path='*' element={<PageNotFound/>}/> */}
             </Routes>
             <Footer/>
