@@ -5,10 +5,35 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { RiDeleteBinLine } from "react-icons/ri";
 import { Link } from 'react-router-dom';
-
+import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2/dist/sweetalert2.all.js'
 
 const Carrito = () =>{
-    const { carrito, eliminoUno, eliminoCarrito, sumaTotal, SubTotal} = useContext(ContextCarrito);
+    const { carrito, eliminoUno, sumaTotal, SubTotal, eliminoCarrito} = useContext(ContextCarrito);
+
+    /* Swal.fire({
+        title: "SportNew",
+        text: "Tu carrito está vacio, descubri las categorias del sitio y elegi los mejores productos",
+        icon: 'warning',
+        confirmButtonText: "SEGUI COMPRANDO",
+    }) */
+   
+
+    const Alerta=()=>{
+        Swal.fire({
+            title: "SportNew",
+            text: "¿Seguro que elimina el carrito?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar",
+        })
+        .then(resultado => {
+            if (resultado.value) {
+                eliminoCarrito(); 
+            } 
+        });
+    }
 
     return (
         <>
@@ -41,7 +66,7 @@ const Carrito = () =>{
                 <Col sm={2}>
                 <Link className ="btn btn-primary" to="/orden"> Finalizar Compra  </Link></Col>
                 <Col sm={2}>
-                <Button className ="btn btn-light" onClick={eliminoCarrito}>Eliminar Carrito</Button></Col>
+                <Button className ="btn btn-light" onClick={Alerta}>Eliminar Carrito</Button></Col>
             </Row>
         </div>
         </>

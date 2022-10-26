@@ -1,6 +1,4 @@
 import { createContext, useState } from "react";
-import 'react-toastify/dist/ReactToastify.css';
-import Swal from 'sweetalert2/dist/sweetalert2.all.js'
 export const ContextCarrito = createContext();
 
 
@@ -61,27 +59,11 @@ const Provider = ({children}) => {
     }
 
     const eliminoCarrito =()=> {
-       /*  setCarrito([]); */
-        /* showToastMessage(); */
-        Alerta();
+        setCarrito([]);
+       /* Alerta(); */
     }
     
-    const Alerta=()=>{
-        Swal.fire({
-            title: "SportNew",
-            text: "¿Seguro que elimina el carrito?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: "Sí, eliminar",
-            cancelButtonText: "Cancelar",
-        })
-        .then(resultado => {
-            if (resultado.value) {
-                setCarrito([]); 
-            } 
-        });
-
-    }
+   
     return (
         <ContextCarrito.Provider value={{ carrito, agregarCarrito, eliminoUno, eliminoCarrito, sumaTotal, SubTotal, sumaCantidad, cantPordCarrito}}>
                 {children}
