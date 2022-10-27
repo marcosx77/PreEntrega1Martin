@@ -5,14 +5,12 @@ import { useContext } from 'react';
 
 function CartWidget(){
     const { sumaCantidad }=useContext(ContextCarrito);
-    const cantidad=sumaCantidad();
     
-    // hidden= true flase
     return(
         <div>
             <FontAwesomeIcon icon={faShoppingCart} color={"#FFFFFF"} size={"xl"}/>
-            <span className='cartwid'  style={{ visibility: cantidad === 0 ? 'hidden' : 'visible'}}>
-                {cantidad}
+            <span className='cartwid'  style={{ visibility: sumaCantidad() === 0 ? 'hidden' : 'visible', textDecoration: 'none'} }>
+                {sumaCantidad()}
             </span>
         </div>
     );

@@ -15,15 +15,18 @@ const Formulario = () => {
    const [loading, setLoading] = useState(false);
    const [nombre, setNombre] = useState('');
    const [apellido, setApellido] = useState('');
+   const [correo, setCorreo] = useState('');
+   const [correo2, setCorreo2] = useState('');
    const [ordenId, setOrdenId] = useState('');
-   const { carrito, sumaTotal, eliminoCarrito } = useContext(ContextCarrito); 
+   const { carrito, sumaTotal, eliminoCarrito, sumaCantidad } = useContext(ContextCarrito); 
 
-   const handleSubmit = (e) => {
+   const handleSubmit = (event) => {
+
     setLoading(true);
 
-    e.preventDefault();
+    event.preventDefault();
     const orden = {
-        buyer: { nombre, apellido },
+        buyer: { nombre, apellido, correo },
         items: carrito,
         total: sumaTotal(),
         date: serverTimestamp(),
@@ -41,12 +44,19 @@ const Formulario = () => {
         .finally(() => setLoading(false));
     };
 
-   const handleChangeNombre = (e) => {
-    setNombre(e.target.value);
+   const cambiaNombre = (event) => {
+    setNombre(event.target.value);
     };
 
-    const handleChangeApellido = (e) => {
-        setApellido(e.target.value);
+    const cambiaCorreo = (event) => {
+        setCorreo(event.target.value);
+    };
+
+    const cambiaCorreo2 = (event) => {
+        setCorreo2(event.target.value);
+    };
+    const cambiaApellido = (event) => {
+        setApellido(event.target.value);
     };
 
     if (loading) {
@@ -71,26 +81,35 @@ const Formulario = () => {
         });
     }
    return (
+    <>
     <div className="formaulario">
         <Form onSubmit={handleSubmit}>
             <Row className="mb-3">
                 <Form.Group as={Col} md="3">
                     <Form.Label>Nombre</Form.Label>
-                    <Form.Control placeholder="Nombre" name="nombre"   onChange={handleChangeNombre} value={nombre}/>
+                    <Form.Control placeholder="Nombre" name="nombre"  onChange={cambiaNombre} value={nombre} required/>
                 </Form.Group>
                 <Form.Group as={Col} md="3">
                     <Form.Label>Apellido</Form.Label>
-                    <Form.Control placeholder="Apellido" name="apellido"  onChange={handleChangeApellido} value={apellido} />
+                    <Form.Control placeholder="Apellido" name="apellido"  onChange={cambiaApellido} value={apellido} required/>
                 </Form.Group>
             </Row>
             <Row className="mb-3">
                 <Form.Group  as={Col} md="3" controlId="formGridEmail">
                     <Form.Label>Correo Electronico</Form.Label>
-                    <Form.Control type="email" placeholder="correo@correo.com" />
+                    <Form.Control type="email" placeholder="correo@correo.com" name="correo" onChange={cambiaCorreo} value={correo} required/>
+                </Form.Group>
+                <Form.Group  as={Col} md="3" controlId="formGridEmail">
+                    <Form.Label>Confirmar Correo Electronico</Form.Label>
+                    <Form.Control type="email" placeholder="correo@correo.com" name="correo2" onChange={cambiaCorreo2} value={correo2} required/>
                 </Form.Group>
             </Row>
 
             <Row className="mb-3">
+                <Form.Group as={Col} md="3" controlId="formGridAddress1">
+                    <Form.Label>Teléfono</Form.Label>
+                    <Form.Control placeholder="Nro de Teléfono" />
+                </Form.Group>
                 <Form.Group as={Col} md="3" controlId="formGridAddress1">
                     <Form.Label>Dirección</Form.Label>
                     <Form.Control placeholder="Calle y Nro" />
@@ -104,15 +123,23 @@ const Formulario = () => {
                 </Form.Group>
 
                 <Form.Group as={Col} md="2" controlId="formGridZip">
-                    <Form.Label>Codigo Postal</Form.Label>
+                    <Form.Label>Código Postal</Form.Label>
                     <Form.Control placeholder="Cod.Postal"/>
                 </Form.Group>
             </Row>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" disabled={sumaCantidad() === 0}>
             Enviar
             </Button>
         </Form>
      </div>
+     <div>
+        {carrito.map ((prod) =>
+            <p key={prod.id}>{prod.titulo} x {prod.cantidad}</p>
+        )}
+        <h3>Articulos: {sumaCantidad()}</h3>
+        <h2>Total: $ {sumaTotal()}</h2>
+    </div>
+    </>
   );
 }
 

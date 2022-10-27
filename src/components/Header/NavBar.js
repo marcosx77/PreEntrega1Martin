@@ -31,7 +31,7 @@ function NavBar(){
     <header>
     <Navbar className='menu' collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container>
-          <Link to='/'>
+          <Link style={{ textDecoration: 'none' }} to='/'>
             <h1 className='titulo'>SportNew</h1>
           </Link>
           <ul>
