@@ -87,12 +87,17 @@ main {
 
 .carrito{
   min-height: 65vh;
-  max-width: 85vw;
+  max-width: 60%;
   border: 1px solid gray;
   box-shadow: 0px 0px 10px 0.2px #9c9999;
   border-radius: 8px;
   padding: 20px;
   margin: 50px;
+  margin-left: 20%;
+}
+.carDet{
+  padding-left: 8%;
+  border-bottom: 1px solid gray;
 }
 .carrito col {
   font-size: 8px;
@@ -104,6 +109,20 @@ main {
   
 }
 
+.carritoVacio{
+  min-height: 60vh;
+  max-width: 50vw;
+  border: 1px solid gray;
+  box-shadow: 0px 0px 10px 0.2px #9c9999;
+  border-radius: 8px;
+  padding: 30px;
+  margin: 50px;
+  margin-left: 25%;
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  flex-direction: column;
+}
 .cartwid {
   padding: 6px;
   text-decoration: none;
@@ -138,11 +157,23 @@ main {
 }
 
 .formaulario{
-  min-height: 65vh;
+  min-height: 60vh;
   max-width: 90vw;
   padding: 3% ;
-  margin: 5%;
+  margin: 1%;
+  display: flex;
+  justify-content:space-around;
+}
+.formDatos{
   border: 1px solid gray;
-  border-radius: 8px;
   box-shadow: 0px 0px 10px 1px #ccc;
+  border-radius: 8px;
+  padding: 2%;
+}
+
+.formDeta{
+  border: 1px solid gray;
+  box-shadow: 0px 0px 10px 1px #ccc;
+  border-radius: 8px;
+  padding: 2%;
 }

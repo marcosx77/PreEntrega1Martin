@@ -17,6 +17,7 @@ const Formulario = () => {
    const [apellido, setApellido] = useState('');
    const [correo, setCorreo] = useState('');
    const [correo2, setCorreo2] = useState('');
+   const [telefono, setTelefono] = useState('');
    const [ordenId, setOrdenId] = useState('');
    const { carrito, sumaTotal, eliminoCarrito, sumaCantidad } = useContext(ContextCarrito); 
 
@@ -26,7 +27,7 @@ const Formulario = () => {
 
     event.preventDefault();
     const orden = {
-        buyer: { nombre, apellido, correo },
+        buyer: { nombre, apellido, correo, telefono },
         items: carrito,
         total: sumaTotal(),
         date: serverTimestamp(),
@@ -59,6 +60,10 @@ const Formulario = () => {
         setApellido(event.target.value);
     };
 
+    const cambiaTelefono = (event) => {
+        setTelefono(event.target.value);
+    };
+
     if (loading) {
         return (
             <div className="Cargando">
@@ -80,65 +85,71 @@ const Formulario = () => {
             confirmButtonText: "Aceptar",
         });
     }
+    
    return (
     <>
     <div className="formaulario">
-        <Form onSubmit={handleSubmit}>
-            <Row className="mb-3">
-                <Form.Group as={Col} md="3">
-                    <Form.Label>Nombre</Form.Label>
-                    <Form.Control placeholder="Nombre" name="nombre"  onChange={cambiaNombre} value={nombre} required/>
-                </Form.Group>
-                <Form.Group as={Col} md="3">
-                    <Form.Label>Apellido</Form.Label>
-                    <Form.Control placeholder="Apellido" name="apellido"  onChange={cambiaApellido} value={apellido} required/>
-                </Form.Group>
-            </Row>
-            <Row className="mb-3">
-                <Form.Group  as={Col} md="3" controlId="formGridEmail">
-                    <Form.Label>Correo Electronico</Form.Label>
-                    <Form.Control type="email" placeholder="correo@correo.com" name="correo" onChange={cambiaCorreo} value={correo} required/>
-                </Form.Group>
-                <Form.Group  as={Col} md="3" controlId="formGridEmail">
-                    <Form.Label>Confirmar Correo Electronico</Form.Label>
-                    <Form.Control type="email" placeholder="correo@correo.com" name="correo2" onChange={cambiaCorreo2} value={correo2} required/>
-                </Form.Group>
-            </Row>
+        <div className="formDatos">
+            <Form onSubmit={handleSubmit}>
+                <h5>Formulario de compra</h5>
+                <Row className="mb-3">
+                    <Form.Group as={Col} md="6">
+                        <Form.Label>Nombre</Form.Label>
+                        <Form.Control placeholder="Nombre" name="nombre"  onChange={cambiaNombre} value={nombre} required/>
+                    </Form.Group>
+                    <Form.Group as={Col} md="6">
+                        <Form.Label>Apellido</Form.Label>
+                        <Form.Control placeholder="Apellido" name="apellido"  onChange={cambiaApellido} value={apellido} required/>
+                    </Form.Group>
+                </Row>
+                <Row className="mb-3">
+                    <Form.Group  as={Col} md="12" controlId="formGridEmail">
+                        <Form.Label>Correo Electronico</Form.Label>
+                        <Form.Control type="email" placeholder="correo@correo.com" name="correo" onChange={cambiaCorreo} value={correo} required/>
+                    </Form.Group>
+                    <Form.Group  as={Col} md="12" controlId="formGridEmail">
+                        <Form.Label>Confirmar Correo Electronico</Form.Label>
+                        <Form.Control type="email" placeholder="correo@correo.com" name="correo2" onChange={cambiaCorreo2} value={correo2} required/>
+                    </Form.Group>
+                </Row>
 
-            <Row className="mb-3">
-                <Form.Group as={Col} md="3" controlId="formGridAddress1">
-                    <Form.Label>Teléfono</Form.Label>
-                    <Form.Control placeholder="Nro de Teléfono" />
-                </Form.Group>
-                <Form.Group as={Col} md="3" controlId="formGridAddress1">
-                    <Form.Label>Dirección</Form.Label>
-                    <Form.Control placeholder="Calle y Nro" />
-                </Form.Group>
-            </Row>
+                <Row className="mb-3">
+                    <Form.Group as={Col} md="6" controlId="formGridTelefono">
+                        <Form.Label>Teléfono</Form.Label>
+                        <Form.Control placeholder="Nro de Teléfono" onChange={cambiaTelefono} value={telefono} />
+                    </Form.Group>
+                    <Form.Group as={Col} md="12" controlId="formGridAddress1">
+                        <Form.Label>Dirección</Form.Label>
+                        <Form.Control placeholder="Calle y Nro" />
+                    </Form.Group>
+                </Row>
 
-            <Row className="mb-3">
-                <Form.Group as={Col} md="3" controlId="formGridCity">
-                    <Form.Label>Localidad</Form.Label>
-                    <Form.Control placeholder="Localidad"/>
-                </Form.Group>
+                <Row className="mb-3">
+                    <Form.Group as={Col} md="6" controlId="formGridCity">
+                        <Form.Label>Localidad</Form.Label>
+                        <Form.Control placeholder="Localidad"/>
+                    </Form.Group>
 
-                <Form.Group as={Col} md="2" controlId="formGridZip">
-                    <Form.Label>Código Postal</Form.Label>
-                    <Form.Control placeholder="Cod.Postal"/>
-                </Form.Group>
-            </Row>
-            <Button variant="primary" type="submit" disabled={sumaCantidad() === 0}>
-            Enviar
-            </Button>
-        </Form>
+                    <Form.Group as={Col} md="6" controlId="formGridZip">
+                        <Form.Label>Código Postal</Form.Label>
+                        <Form.Control placeholder="Cod.Postal"/>
+                    </Form.Group>
+                </Row>
+                <Button variant="primary" type="submit" disabled={sumaCantidad() === 0}>
+                Enviar
+                </Button>
+            </Form>
+        </div>
+        <div className='formDeta'>
+            <h3>Detalle de la Compra</h3>
+            {carrito.map ((prod) =>
+                <p key={prod.id}>{prod.titulo} x {prod.cantidad}</p>
+            )}
+            <h5>Articulos: {sumaCantidad()}</h5>
+            <h3>Total: $ {sumaTotal()}</h3>
+        </div>
      </div>
-     <div>
-        {carrito.map ((prod) =>
-            <p key={prod.id}>{prod.titulo} x {prod.cantidad}</p>
-        )}
-        <h3>Articulos: {sumaCantidad()}</h3>
-        <h2>Total: $ {sumaTotal()}</h2>
-    </div>
+    
     </>
   );
 }
