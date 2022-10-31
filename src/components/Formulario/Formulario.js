@@ -10,6 +10,7 @@ import { baseDatos } from '../../Services/firebaseConfig';
 import MoonLoader from 'react-spinners/MoonLoader';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2/dist/sweetalert2.all.js'
+import { Link } from 'react-router-dom';
 
 const Formulario = () => {
    const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ const Formulario = () => {
    const { carrito, sumaTotal, eliminoCarrito, sumaCantidad } = useContext(ContextCarrito); 
 
    const handleSubmit = (event) => {
-
+    
     setLoading(true);
 
     event.preventDefault();
@@ -34,16 +35,26 @@ const Formulario = () => {
     };
 
     const ordersCollection = collection(baseDatos, 'ordenes');
-    addDoc(ordersCollection, orden)
-        .then((res) => {
-            setOrdenId(res.id);
-            eliminoCarrito(); 
-        })
-        .catch((error) => {
-            console.log(error);
-        })
-        .finally(() => setLoading(false));
-    };
+    if (correo===correo2){
+        addDoc(ordersCollection, orden)
+            .then((res) => {
+                setOrdenId(res.id);
+                eliminoCarrito(); 
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => setLoading(false));
+        }else{
+            Swal.fire({
+                title: 'SportNew',
+                text: 'Los correos Electrónicos no coinciden, Verifique',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+              });
+              setLoading(false);
+        }
+        };
 
    const cambiaNombre = (event) => {
     setNombre(event.target.value);
@@ -76,14 +87,15 @@ const Formulario = () => {
         );
     }
     if (ordenId) {
-        Swal.fire({
-            html: `<h1>SportNew</h1>
-            <h3>Gracias por tu Compra..!!!</h3>
-            <p>Tu número de seguimiento es:</p>
-            </p><strong>${ordenId}</strong></p>`,
-            icon: 'success',
-            confirmButtonText: "Aceptar",
-        });
+        return(
+            <div className="carritoVacio">
+                <h1>SporNew</h1>
+                <h3>Gracias por tu Compra..!!!</h3>
+                <h5>Tu número de seguimiento es:</h5>
+                <h2>{ordenId}</h2>
+                <Link  className ="btn btn-primary" to='/'>Seguir comprando</Link>
+            </div>
+           ) 
     }
     
    return (
@@ -116,23 +128,7 @@ const Formulario = () => {
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6" controlId="formGridTelefono">
                         <Form.Label>Teléfono</Form.Label>
-                        <Form.Control placeholder="Nro de Teléfono" onChange={cambiaTelefono} value={telefono} />
-                    </Form.Group>
-                    <Form.Group as={Col} md="12" controlId="formGridAddress1">
-                        <Form.Label>Dirección</Form.Label>
-                        <Form.Control placeholder="Calle y Nro" />
-                    </Form.Group>
-                </Row>
-
-                <Row className="mb-3">
-                    <Form.Group as={Col} md="6" controlId="formGridCity">
-                        <Form.Label>Localidad</Form.Label>
-                        <Form.Control placeholder="Localidad"/>
-                    </Form.Group>
-
-                    <Form.Group as={Col} md="6" controlId="formGridZip">
-                        <Form.Label>Código Postal</Form.Label>
-                        <Form.Control placeholder="Cod.Postal"/>
+                        <Form.Control placeholder="Nro de Teléfono" onChange={cambiaTelefono} value={telefono} required/>
                     </Form.Group>
                 </Row>
                 <Button variant="primary" type="submit" disabled={sumaCantidad() === 0}>
