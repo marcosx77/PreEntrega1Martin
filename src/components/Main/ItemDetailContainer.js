@@ -6,23 +6,23 @@ import { collection, doc, getDoc } from "firebase/firestore";
 import {baseDatos} from '../../Services/firebaseConfig'
 
 const ItemDetailContainer= ()=>{
-    const [itemDet, setItemDet]=useState({});
+    const [itemDetalle, setItemDetalle]=useState({});
     const [loading, setLoading] = useState(true);
     const { id } = useParams();
 
     useEffect(()=>{
-        const colectionProductos=collection(baseDatos,'productos');
-        const prodId =doc(colectionProductos, id);
+        const listaProductos=collection(baseDatos,'productos');
+        const prodId =doc(listaProductos, id);
         getDoc(prodId)
 
-        .then((res)=>{
-            setItemDet ({
-               id:  res.id,
-               ...res.data(),
+        .then((r)=>{
+            setItemDetalle ({
+               id:  r.id,
+               ...r.data(),
             });        
         })
         .catch(()=>{
-            console.log('Error')
+            console.log('Devuelve Error')
         })
         .finally(() => {
             setLoading(false);
@@ -45,32 +45,9 @@ const ItemDetailContainer= ()=>{
 
     return (
         <div className="itemlistcontainer">
-            <ItemDetalle item={itemDet}/>
+            <ItemDetalle item={itemDetalle}/>
         </div>
     );
 }
 
 export default ItemDetailContainer;
-
-
-/* const DetalleProducto=() =>{
-    return new Promise((res, rej)=>{
-        const prod= productos.find((p)=>p.id===Number(id));
-
-        setTimeout(() => {
-            res(prod);
-        }, 1500);
-    })
-};
-DetalleProducto()
-.then((res)=>{
-    setItemDet(res);        
-})
-.catch(()=>{
-    console.log('Error')
-})
-.finally(() => {
-    setLoading(false);
-});
-
-return () => setLoading(true); */

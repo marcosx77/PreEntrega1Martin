@@ -3,7 +3,6 @@ import React, { useState } from "react";
 
 const ItemCount = ({agregar, stock, inicial=1}) =>{
     const [contador, setContador] = useState(inicial);
-    /* const {agregar}=props; */
 
     const suma=() =>{
         contador < stock && setContador(contador + 1);

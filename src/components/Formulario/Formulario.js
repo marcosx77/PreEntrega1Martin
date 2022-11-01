@@ -22,7 +22,7 @@ const Formulario = () => {
    const [ordenId, setOrdenId] = useState('');
    const { carrito, sumaTotal, eliminoCarrito, sumaCantidad } = useContext(ContextCarrito); 
 
-   const handleSubmit = (event) => {
+   const EnviarOrdenCompra = (event) => {
     
     setLoading(true);
 
@@ -31,12 +31,12 @@ const Formulario = () => {
         buyer: { nombre, apellido, correo, telefono },
         items: carrito,
         total: sumaTotal(),
-        date: serverTimestamp(),
+        fecha: serverTimestamp(),
     };
 
-    const ordersCollection = collection(baseDatos, 'ordenes');
+    const detalleOrden = collection(baseDatos, 'ordenes');
     if (correo===correo2){
-        addDoc(ordersCollection, orden)
+        addDoc(detalleOrden, orden)
             .then((res) => {
                 setOrdenId(res.id);
                 eliminoCarrito(); 
@@ -102,7 +102,7 @@ const Formulario = () => {
     <>
     <div className="formaulario">
         <div className="formDatos">
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={EnviarOrdenCompra}>
                 <h5>Formulario de compra</h5>
                 <Row className="mb-3">
                     <Form.Group as={Col} md="6">
@@ -132,17 +132,19 @@ const Formulario = () => {
                     </Form.Group>
                 </Row>
                 <Button variant="primary" type="submit" disabled={sumaCantidad() === 0}>
-                Enviar
+                Enviar Datos
                 </Button>
             </Form>
         </div>
         <div className='formDeta'>
             <h3>Detalle de la Compra</h3>
+            <br></br>
             {carrito.map ((prod) =>
                 <p key={prod.id}>{prod.titulo} x {prod.cantidad}</p>
             )}
-            <h5>Articulos: {sumaCantidad()}</h5>
-            <h3>Total: $ {sumaTotal()}</h3>
+            <br></br>
+            <h5>Cant.Articulos: {sumaCantidad()}</h5>
+            <h3>Total Compra: $ {sumaTotal()}</h3>
         </div>
      </div>
     

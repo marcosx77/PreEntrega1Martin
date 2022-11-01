@@ -14,8 +14,8 @@ const ItemListContainer=()=>{
     const { nomCategoria }=useParams();
 
     useEffect(()=>{
-        const colectionProductos=collection(baseDatos,'productos');
-        getDocs(nomCategoria===undefined?colectionProductos:query (colectionProductos, where ('categoria','==',nomCategoria)))
+        const listaProductos=collection(baseDatos,'productos');
+        getDocs(nomCategoria===undefined?listaProductos:query (listaProductos, where ('categoria','==',nomCategoria)))
 
         .then((res)=>{
             const productos = res.docs.map((prod)=>{
@@ -56,26 +56,3 @@ const ItemListContainer=()=>{
     );
 }
 export default ItemListContainer;
-
-
-    /* const ObtenerProducto= () =>{
-            return new Promise ((res, rej) =>{
-               const filtroProd = productos.filter((p)=> p.categoria=== nomCategoria);
-
-                setTimeout(() => {
-                    res(nomCategoria ? filtroProd : productos);
-               }, 1500);     
-            });
-        };
-        ObtenerProducto()
-        .then((res)=>{
-            setItem(res);
-        })
-        .catch(()=>{
-            console.log('Devuelve un Error')
-        })
-        .finally(() => {
-            setLoading(false);
-        });
-
-        return () => setLoading(true); */

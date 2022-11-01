@@ -9,7 +9,6 @@ const Item=({prod})=>{
             <Card.Img className='tarjeta-foto' variant="top" src={prod.img} />
             <Card.Body>
                 <Card.Title>{prod.titulo}</Card.Title>
-                {/* <Card.Text>{prod.descripcion}</Card.Text> */}
                 <Card.Text>$ {prod.precio}</Card.Text>
                 <Button variant="primary">{prod.categoria}</Button>
                 <Link  className='linkdeta' to={`/item/${prod.id}`}><Button variant="secondary">Ver Detalle</Button></Link>

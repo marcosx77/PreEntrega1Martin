@@ -11,16 +11,16 @@ function NavBar(){
 
   const [categorias, setCategorias]=useState([]);
   useEffect(()=>{
-    const colleccionCategorias=collection(baseDatos,'categorias');
-    getDocs (colleccionCategorias)
+    const listaCategorias=collection(baseDatos,'categorias');
+    getDocs (listaCategorias)
     .then ((res)=>{
-        const categori =res.docs.map((cat)=>{
+        const cate =res.docs.map((cat)=>{
           return {
             id: cat.id,
             ...cat.data()
           }
         })
-        setCategorias(categori);
+        setCategorias(cate);
     })
     .catch((error)=>{
       console.log('Devuelve un Error')
